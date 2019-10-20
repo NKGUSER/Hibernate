@@ -1,6 +1,8 @@
 package com;
 
 import java.util.List;
+import java.util.concurrent.*;
+
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,6 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 @Entity
 public class Team {
 	
@@ -20,10 +25,12 @@ public class Team {
     @SequenceGenerator(name = "team_Sequence", sequenceName = "TEAM_SEQ")
 	private Long id;
 	
+	
 	@Column
 	private String name;
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "team")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "team" )
+	@Fetch(FetchMode.SELECT)
 	private List<Player> players;
 	
 	public Team() {

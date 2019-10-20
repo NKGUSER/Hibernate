@@ -20,7 +20,7 @@ public class Consumewebsvc {
 	public String getworld() {
 		HttpHeaders hd = new HttpHeaders();
 		hd.setAccept(Arrays.asList( MediaType.APPLICATION_JSON));
-		HttpEntity<String> entity = new HttpEntity<String>(hd);
+		HttpEntity<String> entity = new HttpEntity<>(hd);
 		return rt.exchange("http://localhost:8000/world", HttpMethod.GET, entity, String.class).getBody();	
 	}
 }

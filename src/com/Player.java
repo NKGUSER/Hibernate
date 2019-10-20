@@ -18,7 +18,7 @@ public class Player {
 	@SequenceGenerator(name = "player_sequence", sequenceName = "Player_SEQ")
 	private Long id;
 	
-	@Column
+	@Column(name = "Fname")
 	private String name;
 	
 	@Column

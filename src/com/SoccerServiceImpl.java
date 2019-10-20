@@ -17,7 +17,7 @@ public class SoccerServiceImpl implements SoccerService {
 	
 	public List<String> getAllTeamPlayers(long teamId) {
 		
-		List<String> result = new ArrayList<String>();
+		List<String> result = new ArrayList<>();
 		List<Player> players = playerRepository.findByTeamId(teamId);
 		
 		for(Player player : players) {
@@ -28,7 +28,7 @@ public class SoccerServiceImpl implements SoccerService {
 
 	public void addBarcelonaPlayer(String name, String position, int number) {
 		
-		Team barcelona = teamRepository.findOne((long) number);
+		Team barcelona = teamRepository.findByPlayers((long) number);
         Player newPlayer = new Player();
         newPlayer.setName(name);
         newPlayer.setPosition(position);
