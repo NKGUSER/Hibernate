@@ -9,16 +9,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class JwtUserDetails implements UserDetails {
 
 	private String userName;
-	private Long Id;
+	private Long id;
 	private String token;
 	private Collection<? extends GrantedAuthority> authorities;
 	
 	
-	public JwtUserDetails(String userName, String id, String token, List<GrantedAuthority> grantedAuthorities) {
+	public JwtUserDetails(String userName, long id, String token, List<GrantedAuthority> grantedAuthorities) {
 	
 		this.userName = userName;
-		this.Id = Id;
-		this.authorities = authorities;
+		this.id = id;
+		this.authorities = grantedAuthorities;
 		this.token = token;
 	
 	}
@@ -28,6 +28,11 @@ public class JwtUserDetails implements UserDetails {
 		return authorities;
 	}
 	
+    @Override
+    public String getPassword() {
+        return null;
+    }
+	
 	@Override
 	public String getUsername() {
 		return userName;
@@ -35,7 +40,7 @@ public class JwtUserDetails implements UserDetails {
 
 	@Override
 	public boolean isAccountNonExpired() {
-		return false;
+		return true;
 	}
 
 	@Override
@@ -60,14 +65,11 @@ public class JwtUserDetails implements UserDetails {
 	}
 
 	public Long getId() {
-		return Id;
+		return id;
 	}
 
 	public String getToken() {
 		return token;
 	}
 
-	public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
-		this.authorities = authorities;
-	}
 }

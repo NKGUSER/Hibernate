@@ -3,26 +3,26 @@ package model;
 public class JwtUser {
 
 	private String UserName;
-	private String Id;
+	private Long Id;
 	private String Role;
 	
-	public void setUserName(String subject) {
-		
-	}
+    public void setUserName(String userName) {
+        this.UserName = userName;
+    }
 
-	public void setId(long parseLong) {
-		
-	}
+    public void setId(long id) {
+        this.Id = id;
+    }
 
-	public void setRole(String string) {
-		
-	}
+    public void setRole(String role) {
+        this.Role = role;
+    }
 
 	public String getUserName() {
 		return UserName;
 	}
 
-	public String getId() {
+	public Long getId() {
 		return Id;
 	}
 
