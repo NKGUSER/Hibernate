@@ -1,19 +1,27 @@
 package Test;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import com.SoccerService;
 import com.config;
@@ -24,7 +32,7 @@ import com.config;
 
 @RunWith(SpringRunner.class)
 
-// SpringRunner help you getting Spring Test context framework, Application context
+// SpringRunner help you getting Spring Test context framework
 // @MockBean provided by this class.
 
 @SpringBootTest(classes = config.class)
@@ -33,7 +41,14 @@ import com.config;
 // webEnvironment attribute allows specific “web environments” 
 // to be configured for the test.
 // Load Specific configuration 
-// TestRestTemplate is now availble as Bean
+// TestRestTemplate is now available as Bean
+
+@WebAppConfiguration
+
+//@WebAppConfiguration is a class-level annotation that is used to 
+//declare that the ApplicationContext loaded for an integration test 
+//should be a WebApplicationContext. 
+
 
 public class JunitTest {
 
@@ -46,13 +61,25 @@ public class JunitTest {
 	@Mock
 	SoccerService SS;
 	
+	@Autowired
+	private WebApplicationContext ctx;
+	private MockMvc mockMvc;
+	
 	@Before
 	public void setUp() throws Exception {
 		
 		MockitoAnnotations.initMocks(this);
+		
+		this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
+		
 		System.out.println("Start Junit Testing");;	
 	}
 
+	 @Test
+	 public void testRetrieiveMessage() throws Exception {
+	  mockMvc.perform(get("/").accept(MediaType.APPLICATION_JSON))
+	                                 .andExpect(status().isOk());
+	 }
 	@Test
 	public void testPlayer() {
 		List<String> list = new ArrayList<>();
@@ -62,5 +89,10 @@ public class JunitTest {
 		List<String> l = SS.getAllTeamPlayers(2);
 		
 		System.out.println("Test cases passed");
+	}
+	
+	@After
+	public void teardown() throws Exception {
+		
 	}
 }
