@@ -2,6 +2,7 @@ package config;
 
 import java.util.Collections;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,7 +24,9 @@ import security.JwtSuccessHandler;
 @Configuration
 public class Jwtsecurityconfig extends WebSecurityConfigurerAdapter {
 	
+	@Autowired
 	private JwtAuthenticationProvider authenticationProvider;
+	@Autowired
 	private JwtAuthenticationEntryPoint entryPoint;
 	
 	
@@ -59,10 +62,6 @@ public class Jwtsecurityconfig extends WebSecurityConfigurerAdapter {
 		http.addFilterBefore(authenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 		
 		http.headers().cacheControl();
-	}
-	
-	
-	
-	
-
+		
+	}	
 }
